@@ -19,7 +19,7 @@ warn_sec = 86400 # 1 day
 crit_sec = 86400*3 # 3 days
 # the following settings must fit with your sudoers entry:
 borgmatic_bin = "sudo borgmatic"
-borgmatic_parameters = "--list --successful --last 1 --json"
+borgmatic_parameters = "info --archive latest --json"
 
 # init the parser
 parser = argparse.ArgumentParser(description='nagios/icinga2 plugin for borgmatic to check the last successful backup.')
@@ -59,7 +59,7 @@ if not data[0]['archives']:
   sys.exit(2)
 
 last_backup_name = data[0]['archives'][0]['name'] 
-last_backup_time_str = data[0]['archives'][0]['time']
+last_backup_time_str = data[0]['archives'][0]['end']
 
 last_backup_time = datetime.datetime.strptime(last_backup_time_str, '%Y-%m-%dT%H:%M:%S.%f')
 
